@@ -1,3 +1,4 @@
+using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ namespace API.Extensions
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(config.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IProductRepository, ProductRepository>();
             return services;
         }
     }

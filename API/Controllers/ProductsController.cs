@@ -1,28 +1,27 @@
 using Core.Entities;
-using Infrastructure.Data;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
     public class ProductsController : BaseController
     {
-        private readonly ApplicationDbContext _context;
-        public ProductsController(ApplicationDbContext context)
+        private readonly IProductRepository _repostiory;
+        public ProductsController(IProductRepository repostiory)
         {
-            _context = context;
+            _repostiory = repostiory;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return Ok(await _repostiory.GetProductsAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            return Ok(await _repostiory.GetProductByIdAsync(id));
         }
     }
 }
