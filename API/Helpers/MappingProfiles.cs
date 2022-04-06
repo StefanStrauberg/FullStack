@@ -12,7 +12,9 @@ namespace API.Helpers
                 .ForMember(dist => dist.ProductBrand,
                     opt => opt.MapFrom(src => src.ProductBrand.Name))
                 .ForMember(dist => dist.ProductType,
-                    opt => opt.MapFrom(src => src.ProductType.Name));
+                    opt => opt.MapFrom(src => src.ProductType.Name))
+                .ForMember(dist => dist.PictureUrl,
+                opt => opt.MapFrom<ProductUrlResolver>());
         }
     }
 }
