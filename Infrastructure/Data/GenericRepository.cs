@@ -18,11 +18,11 @@ namespace Infrastructure.Data
             return await ApplySpecification(spec).CountAsync();
         }
 
-        public async Task<IReadOnlyList<T>> GetAllSync()
+        public async Task<IReadOnlyList<T>> ListAllSync()
         {
             return await _context.Set<T>().ToListAsync();
         }
-        public async Task<IReadOnlyList<T>> GetAllWithSpec(ISpecification<T> spec)
+        public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).ToListAsync();
         }
@@ -34,6 +34,7 @@ namespace Infrastructure.Data
         {
             return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
+
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(

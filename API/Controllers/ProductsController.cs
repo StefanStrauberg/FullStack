@@ -33,13 +33,14 @@ namespace API.Controllers
             var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
             var countSpec = new ProductWithFilterForCountSpecification(productParams);
             var totalItems = await _productRepo.CountAsync(countSpec);
-            var products = await _productRepo.GetAllWithSpec(spec);
+            var products = await _productRepo.ListAsync(spec);
             var data = _mapper.Map<IReadOnlyList<ProductToReturnDto>>(products);
             return Ok(new Pagination<ProductToReturnDto>(
                 productParams.PageIndex,
                 productParams.PageSize,
                 totalItems,
-                data));
+                data
+            ));
         }
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -54,12 +55,12 @@ namespace API.Controllers
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
         {
-            return Ok(await _productBrandRepo.GetAllSync());
+            return Ok(await _productBrandRepo.ListAllSync());
         }
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetProductTypes()
         {
-            return Ok(await _productTypeRepo.GetAllSync());
+            return Ok(await _productTypeRepo.ListAllSync());
         }
     }
 }
