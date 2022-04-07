@@ -33,6 +33,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
 app.UseRouting();
 app.UseStaticFiles();
 app.MapControllers();
