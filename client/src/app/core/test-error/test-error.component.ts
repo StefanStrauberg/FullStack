@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TestErrorComponent implements OnInit {
   baseUrl: string = environment.apiUrl;
+  validationErrors: any;
 
   constructor(private http: HttpClient) { }
 
@@ -36,18 +37,12 @@ export class TestErrorComponent implements OnInit {
       console.log(error);
     })
   }
-  get400Validation() {
-    this.http.get(this.baseUrl + 'buggy/asdaseq').subscribe(response => {
-      console.log(response);
-    }, error => {
-      console.log(error);
-    })
-  }
   get400ValidationError() {
     this.http.get(this.baseUrl + 'products/4asdasd3').subscribe(response => {
       console.log(response);
     }, error => {
       console.log(error);
+      this.validationErrors = error.errors;
     })
   }
 }
